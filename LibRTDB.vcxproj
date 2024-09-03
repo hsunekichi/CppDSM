@@ -1,0 +1,467 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Redis_cache.cpp" />
+    <ClCompile Include="Redis_handler.cpp" />
+    <ClCompile Include="RTDBAssetManager.cpp" />
+    <ClCompile Include="RTDBDatabaseLoadCache.cpp" />
+    <ClCompile Include="RTDBDeviceTypeArrayCell.cpp" />
+    <ClCompile Include="RTDBHashTable.cpp" />
+    <ClCompile Include="RTDBNotificationManager.cpp" />
+    <ClCompile Include="RTDB.cpp" />
+    <ClCompile Include="RTDBDeviceArrayCell.cpp" />
+    <ClCompile Include="RTDBManager.cpp" />
+    <ClCompile Include="RTDBUtils.cpp" />
+    <ClCompile Include="RTDBVariableArrayCell.cpp" />
+    <ClCompile Include="xxhash.c" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="DeferredLock.h" />
+    <ClInclude Include="RTDBArrayManager.h" />
+    <ClInclude Include="RTDBAssetManager.h" />
+    <ClInclude Include="RTDBCommonTypes.h" />
+    <ClInclude Include="RTDBDatabaseLoadCache.h" />
+    <ClInclude Include="RTDBMode.h" />
+    <ClInclude Include="RTDBNotificationManager.h" />
+    <ClInclude Include="RTDBCoreManagers.h" />
+    <ClInclude Include="RTDBCoreTypes.h" />
+    <ClInclude Include="STLContainerView.h" />
+    <ClInclude Include="RTDBHashTable.h" />
+    <ClInclude Include="RTDB.h" />
+    <ClInclude Include="RTDBManager.h" />
+    <ClInclude Include="RTDBInterfaceTypes.h" />
+    <ClInclude Include="RTDBUtils.h" />
+    <ClInclude Include="version_specific.h" />
+    <ClInclude Include="xxhash.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="LibRTDB.rc" />
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{A51A7FD4-D3BD-405F-AE61-1D28B4A8908F}</ProjectGuid>
+    <RootNamespace>LibRTDB</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <PlatformToolset>v141</PlatformToolset>
+    <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>MultiByte</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <PlatformToolset>v141</PlatformToolset>
+    <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>MultiByte</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <PlatformToolset>v141</PlatformToolset>
+    <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>MultiByte</CharacterSet>
+    <WholeProgramOptimization>false</WholeProgramOptimization>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <PlatformToolset>v141</PlatformToolset>
+    <UseOfMfc>false</UseOfMfc>
+    <CharacterSet>MultiByte</CharacterSet>
+    <WholeProgramOptimization>false</WholeProgramOptimization>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC60.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC60.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC60.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC60.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>12.0.30501.0</_ProjectFileVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+    <OutDir>$(SolutionDir)$(PlatformTarget)\$(Configuration)\$(ProjectName)\</OutDir>
+    <IntDir>$(SolutionDir)$(PlatformTarget)\$(Configuration)\$(ProjectName)\</IntDir>
+    <CodeAnalysisRuleSet>NativeMinimumRules.ruleset</CodeAnalysisRuleSet>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <LinkIncremental>false</LinkIncremental>
+    <TargetName>$(ProjectName)64</TargetName>
+    <OutDir>$(SolutionDir)$(PlatformTarget)\$(Configuration)\$(ProjectName)64\</OutDir>
+    <IntDir>$(SolutionDir)$(PlatformTarget)\$(Configuration)\$(ProjectName)64\</IntDir>
+    <CodeAnalysisRuleSet>NativeMinimumRules.ruleset</CodeAnalysisRuleSet>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+    <TargetName>$(ProjectName)_d</TargetName>
+    <OutDir>$(SolutionDir)$(PlatformTarget)\$(Configuration)\$(ProjectName)_d\</OutDir>
+    <IntDir>$(SolutionDir)$(PlatformTarget)\$(Configuration)\$(ProjectName)_d\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <LinkIncremental>false</LinkIncremental>
+    <TargetName>$(ProjectName)64_d</TargetName>
+    <OutDir>$(SolutionDir)$(PlatformTarget)\$(Configuration)\$(ProjectName)64_d\</OutDir>
+    <IntDir>$(SolutionDir)$(PlatformTarget)\$(Configuration)\$(ProjectName)64_d\Intermediate\</IntDir>
+    <CodeAnalysisRuleSet>MixedRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <PreBuildEvent>
+      <Message>Generate the svn_version.h file with the necessary repo identify info for versioning</Message>
+      <Command>SubWCRev.exe "$(ProjectDir)..\.." "$(ProjectDir)..\..\Servidor_ITS\svn_version.h.tmpl" "$(ProjectDir)svn_version.h"</Command>
+    </PreBuildEvent>
+    <CustomBuildStep>
+      <Command>
+                 xcopy /y "$(ProjectDir)*.h*" "$(ProjectDir)..\..\ServidorLibrerias\include\"
+                 xcopy /y "$(OutDir)$(TargetName).lib" "$(ProjectDir)..\..\ServidorLibrerias\lib"
+                 xcopy /y "$(OutDir)$(TargetName)$(TargetExt)" "$(ProjectDir)..\..\ServidorLibrerias\lib"
+      </Command>
+    </CustomBuildStep>
+    <Midl>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MkTypLibCompatible>true</MkTypLibCompatible>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <DisableSpecificWarnings>4005;4018;4065;4068;4098;4099;4100;4101;4102;4127;4130;4150;4189;4211;4221;4239;4244;4245;4251;4273;4275;4305;4309;4310;4389;4512;4516;4552;4700;4701;4702;4703;4706;4715;4793;4800;4805;4927;4995;4996</DisableSpecificWarnings>
+      <TreatWarningAsError>true</TreatWarningAsError>
+      <TargetEnvironment>Win32</TargetEnvironment>
+      <HeaderFileName />
+    </Midl>
+    <ClCompile>
+      <Optimization>MaxSpeed</Optimization>
+      <AdditionalIncludeDirectories>.\;..\..\Servidor_ITS\Servidor_SCA\ITS_Modulos\ModulosComunes;..\..\Servidor_ITS\Servidor_SCA\ITS_Modulos\ModulosDB;..\..\Servidor_ITS\Servidor_SCA\ITS_Modulos\ModulosProtocolos;..\..\Servidor_ITS\Servidor_SCA\ITS_Modulos\ModulosDriver;..\..\Servidor_ITS\Servidor_SCA\ITS_Modulos\ModulosChile;..\..\Servidor_ITS\Servidor_SCA\ITS_Modulos\ModulosRTDBServidor;..\..\ServidorLibrerias\include\cryptlib700;..\..\ServidorLibrerias\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>false</MinimalRebuild>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <StructMemberAlignment>1Byte</StructMemberAlignment>
+      <BrowseInformation>false</BrowseInformation>
+      <WarningLevel>Level4</WarningLevel>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <ProgramDataBaseFileName />
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+      <DisableSpecificWarnings>4005;4018;4065;4068;4098;4099;4100;4101;4102;4127;4130;4150;4189;4211;4221;4239;4244;4245;4251;4273;4275;4305;4309;4310;4389;4512;4516;4552;4700;4701;4702;4703;4706;4715;4793;4800;4805;4927;4995;4996</DisableSpecificWarnings>
+      <TreatWarningAsError>false</TreatWarningAsError>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <OmitFramePointers>true</OmitFramePointers>
+      <EnablePREfast>false</EnablePREfast>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <Culture>0x040a</Culture>
+    </ResourceCompile>
+    <Link>
+      <AdditionalDependencies>odbc.lib;LogWriter.lib;lectorBD.lib;IniFile.lib;cryptlib.lib;myException.lib;RoutingTable.lib;SharedMailbox.lib;logmanager.lib;psapi.lib;hiredis.lib;redis++.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <AdditionalLibraryDirectories>..\..\ServidorLibrerias\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <TargetMachine>MachineX86</TargetMachine>
+      <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
+      <SubSystem>Windows</SubSystem>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+    </Link>
+    <Bscmake>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+    </Bscmake>
+    <PostBuildEvent>
+      <Command>
+                 xcopy /y "$(ProjectDir)RTDB.h" "$(ProjectDir)..\..\ServidorLibrerias\include\"
+                 xcopy /y "$(ProjectDir)STLContainerView.h" "$(ProjectDir)..\..\ServidorLibrerias\include\"
+                 xcopy /y "$(ProjectDir)RTDBInterfaceTypes.h" "$(ProjectDir)..\..\ServidorLibrerias\include\"
+                 xcopy /y "$(ProjectDir)RTDBCommonTypes.h" "$(ProjectDir)..\..\ServidorLibrerias\include\"
+                 xcopy /y "$(ProjectDir)RTDBMode.h" "$(ProjectDir)..\..\ServidorLibrerias\include\"
+                 xcopy /y "$(OutDir)$(TargetName).lib" "$(ProjectDir)..\..\ServidorLibrerias\lib\"
+                 xcopy /y "$(OutDir)$(TargetName)$(TargetExt)" "$(ProjectDir)..\..\ServidorLibrerias\lib\"
+                 xcopy /y "$(TargetPath)" "$(ProjectDir)..\..\$(PlatformTarget)\Sidera_Apps\SIDERA\"
+                 xcopy /y "$(TargetPath)" "$(ProjectDir)..\..\$(PlatformTarget)\Sidera_Apps\Driver\"
+                 xcopy /y "$(TargetPath)" "$(ProjectDir)..\..\$(PlatformTarget)\SIDERA\Administrator\"
+                 xcopy /y "$(TargetPath)" "$(ProjectDir)..\..\$(PlatformTarget)\SIDERA\bin\"
+                 xcopy /y "$(TargetPath)" "$(ProjectDir)..\..\$(PlatformTarget)\SIDERA\DLLs\"
+                 xcopy /y "$(TargetPath)" "$(ProjectDir)..\..\$(PlatformTarget)\SIDERA_APPS\DLLs\"
+      
+                 xcopy /y "$(OutDir)$(TargetName).lib" "$(ProjectDir)..\..\ServidorLibrerias\lib\"
+                 xcopy /y "$(OutDir)$(TargetName)$(TargetExt)" "$(ProjectDir)..\..\ServidorLibrerias\lib\"
+</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <PreBuildEvent>
+      <Message>Generate the svn_version.h file with the necessary repo identify info for versioning</Message>
+      <Command>SubWCRev.exe "$(SolutionDir).." "$(ProjectDir)..\..\Servidor_ITS\svn_version.h.tmpl" "$(ProjectDir)svn_version.h"</Command>
+    </PreBuildEvent>
+    <CustomBuildStep>
+      <Command>
+                 xcopy /y "$(ProjectDir)*.h*" "$(ProjectDir)..\..\ServidorLibrerias_x64\include\"
+                 xcopy /y "$(OutDir)$(TargetName)$(TargetExt)" "$(ProjectDir)..\..\ServidorLibrerias_X64\lib"
+      </Command>
+    </CustomBuildStep>
+    <Midl>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MkTypLibCompatible>true</MkTypLibCompatible>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <DisableSpecificWarnings>4005;4018;4065;4068;4098;4099;4100;4101;4102;4127;4130;4150;4189;4211;4221;4239;4244;4245;4251;4273;4275;4305;4309;4310;4389;4512;4516;4552;4700;4701;4702;4703;4706;4715;4793;4800;4805;4927;4995;4996</DisableSpecificWarnings>
+      <TreatWarningAsError>true</TreatWarningAsError>
+      <HeaderFileName>
+      </HeaderFileName>
+    </Midl>
+    <ClCompile>
+      <Optimization>MaxSpeed</Optimization>
+      <AdditionalIncludeDirectories>.\;..\..\Servidor_ITS\Servidor_SCA\ITS_Modulos\ModulosComunes;..\..\Servidor_ITS\Servidor_SCA\ITS_Modulos\ModulosDB;..\..\Servidor_ITS\Servidor_SCA\ITS_Modulos\ModulosProtocolos;..\..\Servidor_ITS\Servidor_SCA\ITS_Modulos\ModulosDriver;..\..\Servidor_ITS\Servidor_SCA\ITS_Modulos\ModulosChile;..\..\Servidor_ITS\Servidor_SCA\ITS_Modulos\ModulosRTDBServidor;..\..\ServidorLibrerias_x64\include\cryptlib700;..\..\ServidorLibrerias_x64\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>false</MinimalRebuild>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <StructMemberAlignment>Default</StructMemberAlignment>
+      <BrowseInformation>false</BrowseInformation>
+      <WarningLevel>Level4</WarningLevel>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <ProgramDataBaseFileName>
+      </ProgramDataBaseFileName>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+      <DisableSpecificWarnings>4005;4018;4065;4068;4098;4099;4100;4101;4102;4127;4130;4150;4189;4211;4221;4239;4244;4245;4251;4273;4275;4305;4309;4310;4389;4512;4516;4552;4700;4701;4702;4703;4706;4715;4793;4800;4805;4927;4995;4996</DisableSpecificWarnings>
+      <TreatWarningAsError>false</TreatWarningAsError>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <OmitFramePointers>true</OmitFramePointers>
+      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
+      <EnableFiberSafeOptimizations>true</EnableFiberSafeOptimizations>
+      <EnableParallelCodeGeneration>true</EnableParallelCodeGeneration>
+      <EnableEnhancedInstructionSet>NotSet</EnableEnhancedInstructionSet>
+      <EnablePREfast>true</EnablePREfast>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <Culture>0x040a</Culture>
+    </ResourceCompile>
+    <Link>
+      <AdditionalDependencies>odbc64.lib;LogWriter64.lib;lectorBD64.lib;IniFile64.lib;cryptlib70064.lib;myException64.lib;RoutingTable64.lib;SharedMailbox64.lib;logmanager64.lib;psapi.lib;redis++64.lib;hiredis64.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <AdditionalLibraryDirectories>..\..\ServidorLibrerias_x64\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
+      <SubSystem>Windows</SubSystem>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+    </Link>
+    <Bscmake>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+    </Bscmake>
+    <PostBuildEvent>
+      <Command>
+                 xcopy /y "$(ProjectDir)RTDB.h" "$(ProjectDir)..\..\ServidorLibrerias_x64\include\"
+                 xcopy /y "$(ProjectDir)STLContainerView.h" "$(ProjectDir)..\..\ServidorLibrerias_x64\include\"
+                 xcopy /y "$(ProjectDir)RTDBInterfaceTypes.h" "$(ProjectDir)..\..\ServidorLibrerias_x64\include\"
+                 xcopy /y "$(ProjectDir)RTDBCommonTypes.h" "$(ProjectDir)..\..\ServidorLibrerias_x64\include\"
+                 xcopy /y "$(ProjectDir)RTDBMode.h" "$(ProjectDir)..\..\ServidorLibrerias_x64\include\"
+                 xcopy /y "$(OutDir)$(TargetName).lib" "$(ProjectDir)..\..\ServidorLibrerias_x64\lib\"
+                 xcopy /y "$(OutDir)$(TargetName)$(TargetExt)" "$(ProjectDir)..\..\ServidorLibrerias_x64\lib\"
+                 xcopy /y "$(TargetPath)" "$(ProjectDir)..\..\$(PlatformTarget)\Sidera_Apps\SIDERA\"
+                 xcopy /y "$(TargetPath)" "$(ProjectDir)..\..\$(PlatformTarget)\Sidera_Apps\Driver\"
+                 xcopy /y "$(TargetPath)" "$(ProjectDir)..\..\$(PlatformTarget)\SIDERA\Administrator\"
+                 xcopy /y "$(TargetPath)" "$(ProjectDir)..\..\$(PlatformTarget)\SIDERA\bin\"
+                 xcopy /y "$(TargetPath)" "$(ProjectDir)..\..\$(PlatformTarget)\SIDERA\DLLs\"
+                 xcopy /y "$(TargetPath)" "$(ProjectDir)..\..\$(PlatformTarget)\SIDERA_APPS\DLLs\"
+
+                 xcopy /y "$(OutDir)$(TargetName).lib" "$(ProjectDir)..\..\ServidorLibrerias_x64\lib\"
+                 xcopy /y "$(OutDir)$(TargetName)$(TargetExt)" "$(ProjectDir)..\..\ServidorLibrerias_x64\lib\"
+
+      </Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <PreBuildEvent>
+      <Message>Generate the svn_version.h file with the necessary repo identify info for versioning</Message>
+      <Command>SubWCRev.exe "$(SolutionDir).." "$(ProjectDir)..\..\Servidor_ITS\svn_version.h.tmpl" "$(ProjectDir)svn_version.h</Command>
+    </PreBuildEvent>
+    <CustomBuildStep>
+      <Command>
+                 xcopy /y "$(ProjectDir)*.h*" "$(ProjectDir)..\..\ServidorLibrerias\include\"
+                 xcopy /y "$(OutDir)$(TargetName).lib" "$(ProjectDir)..\..\ServidorLibrerias\lib"
+                 xcopy /y "$(OutDir)$(TargetName)$(TargetExt)" "$(ProjectDir)..\..\ServidorLibrerias\lib"
+      </Command>
+    </CustomBuildStep>
+    <Midl>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MkTypLibCompatible>true</MkTypLibCompatible>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <DisableSpecificWarnings>4005;4018;4065;4068;4098;4099;4100;4101;4102;4127;4130;4150;4189;4211;4221;4239;4244;4245;4251;4273;4275;4305;4309;4310;4389;4512;4516;4552;4700;4701;4702;4703;4706;4715;4793;4800;4805;4927;4995;4996</DisableSpecificWarnings>
+      <TreatWarningAsError>true</TreatWarningAsError>
+      <TargetEnvironment>Win32</TargetEnvironment>
+      <HeaderFileName>
+      </HeaderFileName>
+    </Midl>
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>.\;..\..\Servidor_ITS\Servidor_SCA\ITS_Modulos\ModulosComunes;..\..\Servidor_ITS\Servidor_SCA\ITS_Modulos\ModulosDB;..\..\Servidor_ITS\Servidor_SCA\ITS_Modulos\ModulosProtocolos;..\..\Servidor_ITS\Servidor_SCA\ITS_Modulos\ModulosDriver;..\..\Servidor_ITS\Servidor_SCA\ITS_Modulos\ModulosChile;..\..\Servidor_ITS\Servidor_SCA\ITS_Modulos\ModulosRTDBServidor;..\..\ServidorLibrerias\include\cryptlib700;..\..\ServidorLibrerias\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>false</MinimalRebuild>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <StructMemberAlignment>1Byte</StructMemberAlignment>
+      <BrowseInformation>false</BrowseInformation>
+      <WarningLevel>Level4</WarningLevel>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <ProgramDataBaseFileName>
+      </ProgramDataBaseFileName>
+      <FavorSizeOrSpeed>Neither</FavorSizeOrSpeed>
+      <DisableSpecificWarnings>4005;4018;4065;4068;4098;4099;4100;4101;4102;4127;4130;4150;4189;4211;4221;4239;4244;4245;4251;4273;4275;4305;4309;4310;4389;4512;4516;4552;4700;4701;4702;4703;4706;4715;4793;4800;4805;4927;4995;4996</DisableSpecificWarnings>
+      <TreatWarningAsError>false</TreatWarningAsError>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <ConformanceMode>false</ConformanceMode>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <Culture>0x040a</Culture>
+    </ResourceCompile>
+    <Link>
+      <AdditionalDependencies>odbc_d.lib;LogWriter_d.lib;lectorBD_d.lib;IniFile_d.lib;cryptlib_d.lib;myException_d.lib;RoutingTable_d.lib;SharedMailbox_d.lib;logmanager_d.lib;psapi.lib;redis++_d.lib;hiredis_d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <AdditionalLibraryDirectories>..\..\ServidorLibrerias\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <TargetMachine>MachineX86</TargetMachine>
+      <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
+      <SubSystem>Windows</SubSystem>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
+    </Link>
+    <Bscmake>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+    </Bscmake>
+    <PostBuildEvent>
+      <Command>
+                 xcopy /y "$(ProjectDir)RTDB.h" "$(ProjectDir)..\..\ServidorLibrerias\include\"
+                 xcopy /y "$(ProjectDir)STLContainerView.h" "$(ProjectDir)..\..\ServidorLibrerias\include\"
+                 xcopy /y "$(ProjectDir)RTDBInterfaceTypes.h" "$(ProjectDir)..\..\ServidorLibrerias\include\"
+                 xcopy /y "$(ProjectDir)RTDBCommonTypes.h" "$(ProjectDir)..\..\ServidorLibrerias\include\"
+                 xcopy /y "$(ProjectDir)RTDBMode.h" "$(ProjectDir)..\..\ServidorLibrerias\include\"
+                 xcopy /y "$(OutDir)$(TargetName).lib" "$(ProjectDir)..\..\ServidorLibrerias\lib\"
+                 xcopy /y "$(OutDir)$(TargetName)$(TargetExt)" "$(ProjectDir)..\..\ServidorLibrerias\lib\"</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <PreBuildEvent>
+      <Message>Generate the svn_version.h file with the necessary repo identify info for versioning</Message>
+      <Command>SubWCRev.exe "$(SolutionDir).." "$(ProjectDir)..\..\Servidor_ITS\svn_version.h.tmpl" "$(ProjectDir)svn_version.h</Command>
+    </PreBuildEvent>
+    <CustomBuildStep>
+      <Command>
+                 xcopy /y "$(ProjectDir)*.h*" "$(ProjectDir)..\..\ServidorLibrerias_x64\include\"
+                 xcopy /y "$(OutDir)$(TargetName)$(TargetExt)" "$(ProjectDir)..\..\ServidorLibrerias_X64\lib"
+      </Command>
+    </CustomBuildStep>
+    <Midl>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MkTypLibCompatible>true</MkTypLibCompatible>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <DisableSpecificWarnings>4005;4018;4065;4068;4098;4099;4100;4101;4102;4127;4130;4150;4189;4211;4221;4239;4244;4245;4251;4273;4275;4305;4309;4310;4389;4512;4516;4552;4700;4701;4702;4703;4706;4715;4793;4800;4805;4927;4995;4996</DisableSpecificWarnings>
+      <TreatWarningAsError>true</TreatWarningAsError>
+      <HeaderFileName>
+      </HeaderFileName>
+    </Midl>
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>.\;..\..\Servidor_ITS\Servidor_SCA\ITS_Modulos\ModulosComunes;..\..\Servidor_ITS\Servidor_SCA\ITS_Modulos\ModulosDB;..\..\Servidor_ITS\Servidor_SCA\ITS_Modulos\ModulosProtocolos;..\..\Servidor_ITS\Servidor_SCA\ITS_Modulos\ModulosDriver;..\..\Servidor_ITS\Servidor_SCA\ITS_Modulos\ModulosChile;..\..\Servidor_ITS\Servidor_SCA\ITS_Modulos\ModulosRTDBServidor;..\..\ServidorLibrerias_x64\include\cryptlib700;..\..\ServidorLibrerias_x64\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>false</MinimalRebuild>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <StructMemberAlignment>1Byte</StructMemberAlignment>
+      <BrowseInformation>false</BrowseInformation>
+      <WarningLevel>Level4</WarningLevel>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <ProgramDataBaseFileName>
+      </ProgramDataBaseFileName>
+      <FavorSizeOrSpeed>Neither</FavorSizeOrSpeed>
+      <DisableSpecificWarnings>4005;4018;4065;4068;4098;4099;4100;4101;4102;4127;4130;4150;4189;4211;4221;4239;4244;4245;4251;4273;4275;4305;4309;4310;4389;4512;4516;4552;4700;4701;4702;4703;4706;4715;4793;4800;4805;4927;4995;4996</DisableSpecificWarnings>
+      <TreatWarningAsError>false</TreatWarningAsError>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <OmitFramePointers>false</OmitFramePointers>
+      <InlineFunctionExpansion>Disabled</InlineFunctionExpansion>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <Culture>0x040a</Culture>
+    </ResourceCompile>
+    <Link>
+      <AdditionalDependencies>odbc64_d.lib;LogWriter64_d.lib;lectorBD64_d.lib;IniFile64_d.lib;cryptlib70064_d.lib;myException64_d.lib;RoutingTable64_d.lib;SharedMailbox64_d.lib;logmanager64_d.lib;psapi.lib;redis++64_d.lib;hiredis64_d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <AdditionalLibraryDirectories>..\..\ServidorLibrerias_x64\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
+      <SubSystem>Windows</SubSystem>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
+      <ImportLibrary>$(OutDir)$(TargetName).lib</ImportLibrary>
+    </Link>
+    <Bscmake>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+    </Bscmake>
+    <PostBuildEvent>
+      <Command>
+                 xcopy /y "$(ProjectDir)RTDB.h" "$(ProjectDir)..\..\ServidorLibrerias_x64\include\"
+                 xcopy /y "$(ProjectDir)STLContainerView.h" "$(ProjectDir)..\..\ServidorLibrerias_x64\include\"
+                 xcopy /y "$(ProjectDir)RTDBInterfaceTypes.h" "$(ProjectDir)..\..\ServidorLibrerias_x64\include\"
+                 xcopy /y "$(ProjectDir)RTDBCommonTypes.h" "$(ProjectDir)..\..\ServidorLibrerias_x64\include\"
+                 xcopy /y "$(ProjectDir)RTDBMode.h" "$(ProjectDir)..\..\ServidorLibrerias_x64\include\"
+                 xcopy /y "$(OutDir)$(TargetName).lib" "$(ProjectDir)..\..\ServidorLibrerias_x64\lib\"
+                 xcopy /y "$(OutDir)$(TargetName)$(TargetExt)" "$(ProjectDir)..\..\ServidorLibrerias_x64\lib\"
+                 xcopy /y "$(TargetPath)" "$(TargetDir)..\..\..\..\$(PlatformTarget)\Sidera\bin\"
+                 xcopy /y "$(TargetPath)" "$(TargetDir)..\..\..\..\$(PlatformTarget)\Sidera\DLLs\"
+                 xcopy /y "$(TargetPath)" "$(TargetDir)..\..\..\..\$(PlatformTarget)\Sidera_Apps\DLLs\"
+                 xcopy /y "$(TargetPath)" "$(TargetDir)..\..\..\..\$(PlatformTarget)\Sidera_Apps\Driver\"
+                 xcopy /y "$(TargetPath)" "$(TargetDir)..\..\..\..\$(PlatformTarget)\Sidera_Apps\SIDERA\"
+ 
+                 xcopy /y "$(OutDir)$(TargetName).lib" "$(ProjectDir)..\..\ServidorLibrerias_x64\lib\"
+                 xcopy /y "$(OutDir)$(TargetName)$(TargetExt)" "$(ProjectDir)..\..\ServidorLibrerias_x64\lib\"
+</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

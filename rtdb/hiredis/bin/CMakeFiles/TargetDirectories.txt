@@ -1,0 +1,6 @@
+C:/SVN/SIDERA_VS2017/Librerias/Librerias_Externas/hiredis/bin/CMakeFiles/hiredis.dir
+C:/SVN/SIDERA_VS2017/Librerias/Librerias_Externas/hiredis/bin/CMakeFiles/hiredis_static.dir
+C:/SVN/SIDERA_VS2017/Librerias/Librerias_Externas/hiredis/bin/CMakeFiles/PACKAGE.dir
+C:/SVN/SIDERA_VS2017/Librerias/Librerias_Externas/hiredis/bin/CMakeFiles/INSTALL.dir
+C:/SVN/SIDERA_VS2017/Librerias/Librerias_Externas/hiredis/bin/CMakeFiles/ALL_BUILD.dir
+C:/SVN/SIDERA_VS2017/Librerias/Librerias_Externas/hiredis/bin/CMakeFiles/ZERO_CHECK.dir

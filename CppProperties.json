@@ -1,0 +1,23 @@
+{
+  "configurations": [
+    {
+      "inheritEnvironments": [
+        "msvc_x86"
+      ],
+      "name": "x86-Debug",
+      "includePath": [
+        "${env.INCLUDE}",
+        "${workspaceRoot}\\**",
+        "${workspaceRoot}\\..\\servidorRedis\\redis-plus-plus\\out\\install\\x64\\include\\sw\\redis++\\",
+        "{workspaceRoot}\\servidorRedis\\hiredis\\out\\install\\x64-Debug\\include\\"
+      ],
+      "defines": [
+        "WIN32",
+        "_DEBUG",
+        "UNICODE",
+        "_UNICODE"
+      ],
+      "intelliSenseMode": "windows-msvc-x86"
+    }
+  ]
+}

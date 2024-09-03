@@ -1,0 +1,5 @@
+C:/SVN/SIDERA_VS2017/Librerias/Librerias_Externas/redis-plus-plus/CMakeFiles/redis++.dir
+C:/SVN/SIDERA_VS2017/Librerias/Librerias_Externas/redis-plus-plus/CMakeFiles/PACKAGE.dir
+C:/SVN/SIDERA_VS2017/Librerias/Librerias_Externas/redis-plus-plus/CMakeFiles/INSTALL.dir
+C:/SVN/SIDERA_VS2017/Librerias/Librerias_Externas/redis-plus-plus/CMakeFiles/ALL_BUILD.dir
+C:/SVN/SIDERA_VS2017/Librerias/Librerias_Externas/redis-plus-plus/CMakeFiles/ZERO_CHECK.dir
