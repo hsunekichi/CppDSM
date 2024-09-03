@@ -1,8 +1,0 @@
-C:/SVN/SIDERA_VS2017/Librerias/Librerias_Externas/hiredis/bin/hiredis.dir/Release/alloc.obj
-C:/SVN/SIDERA_VS2017/Librerias/Librerias_Externas/hiredis/bin/hiredis.dir/Release/async.obj
-C:/SVN/SIDERA_VS2017/Librerias/Librerias_Externas/hiredis/bin/hiredis.dir/Release/dict.obj
-C:/SVN/SIDERA_VS2017/Librerias/Librerias_Externas/hiredis/bin/hiredis.dir/Release/hiredis.obj
-C:/SVN/SIDERA_VS2017/Librerias/Librerias_Externas/hiredis/bin/hiredis.dir/Release/net.obj
-C:/SVN/SIDERA_VS2017/Librerias/Librerias_Externas/hiredis/bin/hiredis.dir/Release/read.obj
-C:/SVN/SIDERA_VS2017/Librerias/Librerias_Externas/hiredis/bin/hiredis.dir/Release/sds.obj
-C:/SVN/SIDERA_VS2017/Librerias/Librerias_Externas/hiredis/bin/hiredis.dir/Release/sockcompat.obj
