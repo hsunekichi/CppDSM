@@ -7,7 +7,7 @@ You may take any correct C++ concurrent code, and deploy it across independant m
 ## Interface
 
 The system offers low level instructions similar to Redis and ARM. 
-It also offers a higher level library mimics C++ STL data structures, using the low level interface.
+It also offers a higher level library that mimics C++ STL data structures, using the low level interface.
 
 There are many read and write operations that work exactly like Redis interface. 
 The system implements hash maps, sets, key-value and subscription queues, all for strings.
