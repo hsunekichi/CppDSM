@@ -1,13 +1,13 @@
 # Description
 
-This is a DSM system that allows to use shared memory variables accross many machines seamlessly, with the same interface as C++ concurrent variables (mutexes, atomics, std::vectors...).
+This is a DSM system that allows to use shared memory variables accross many machines seamlessly, with the same interface as C++ concurrent variables (mutex, atomics, std::vectors...).
 
 You may take any correct C++ concurrent code, and deploy it across independant machines by only changing the data types.
 
 ## Interface
 
 The system offers low level instructions similar to Redis and ARM. 
-It also offers a higher level library mimics C++ STL data structures, using the low level interface.
+It also offers a higher level library that mimics C++ STL data structures, using the low level interface.
 
 There are many read and write operations that work exactly like Redis interface. 
 The system implements hash maps, sets, key-value and subscription queues, all for strings.
