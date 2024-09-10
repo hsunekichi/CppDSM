@@ -112,7 +112,7 @@ void prime_worker (QUEUE &data, std::vector<long long> &primes, MUTEX &mtx_data,
 long long generate_number()
 {
     long long MAX = std::numeric_limits<int>::max();
-    MAX = 1000*10*MAX;
+    MAX = MAX;
 
     long long seed = 123456789;
     static std::mt19937 gen(seed);
@@ -136,7 +136,7 @@ int main(int argc, char *argv[])
 
     primes.clear();
 
-    long long n_threads = std::thread::hardware_concurrency();
+    long long n_threads = 2; // std::thread::hardware_concurrency();
     std::vector<std::thread> threads;
 
     std::cout << "Threads: " << n_threads << std::endl;

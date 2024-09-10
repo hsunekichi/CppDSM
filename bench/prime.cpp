@@ -57,7 +57,7 @@ long long EXEC_TIME = 10;
 long long BATCH_SIZE = 10000;
 long long N_THREADS = 16;
 
-std::string HOST = "192.168.1.1";
+std::string HOST = "192.168.1.50";
 long long PORT = 6379;
 
 
@@ -171,7 +171,7 @@ int main(int argc, char *argv[])
     // Get hardware concurrency
 
 
-    long long n_threads = std::thread::hardware_concurrency();
+    long long n_threads = 2; //std::thread::hardware_concurrency();
     std::vector<std::thread> threads;
 
     std::cout << "Threads: " << n_threads << std::endl;

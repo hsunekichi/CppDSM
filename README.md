@@ -45,6 +45,9 @@ The high level libraries have been designed arround the hash table to obtain the
 It has high performance, close to MPI in bandwidth use on the basic scenarios tested. 
 The average latency per access is only arround 3 times higher than using directly the local RAM, despite having all the data distributed across remote machines on a ~30ms latency network.
 
+NOTE: Currently there is no eviction policy. 
+Cache grows indefinitely until it is cleared, so some eviction policy to free spaces automatically would be interesting
+
 ## Correctness
 
 This project is experimental, the test cases are basic so more in-depth tests should be made to warrantee its correction. 
