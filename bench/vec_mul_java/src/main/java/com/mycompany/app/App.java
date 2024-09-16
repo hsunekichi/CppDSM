@@ -148,7 +148,7 @@ public class App {
         // Connect to Redis server. Make sure your Redis server is running.
         //RedissonClient redisson = Redisson.create();
         Config config = new Config();
-        config.useSingleServer().setAddress("redis://127.0.0.1:6379");
+        config.useSingleServer().setAddress("redis://192.168.1.49:6378");
         config.useSingleServer().setConnectionPoolSize(1000).setRetryAttempts(6); // Set an appropriate value based on your requirements
         config.useSingleServer().setConnectTimeout(5000)  // Set the connection timeout in milliseconds
                 .setTimeout(3000);                               // Set the general operation timeout in milliseconds
@@ -186,24 +186,24 @@ public class App {
         long startTime = System.nanoTime();
 
         // Initialize arrays with batch operations
-        RBatch batch = redisson.createBatch(BatchOptions.defaults());
-        for (int i = 0; i < nVars; i++) {
-            batch.getMap("v1").putAsync(i, i);
-            batch.getMap("v2").putAsync(i, nVars - i);
-            batch.getMap("v3").putAsync(i, 0);
-        }
-        batch.execute();
+        //RBatch batch = redisson.createBatch(BatchOptions.defaults());
+        //for (int i = 0; i < nVars; i++) {
+        //    batch.getMap("v1").putAsync(i, i);
+        //    batch.getMap("v2").putAsync(i, nVars - i);
+        //    batch.getMap("v3").putAsync(i, 0);
+        //}
+        //batch.execute();
 
         // Wait for the pipeline to complete
         
 
         
-        //for (Integer i = 0; i < nVars; i++) 
+        for (Integer i = 0; i < nVars; i++) 
         {
-            //v1.fastPutAsync(i, i);
-            //Integer j = nVars - i;
-            //v2.fastPutAsync(i, j);
-            //v3.fastPutAsync(i, 0);
+            v1.fastPutAsync(i, i);
+            Integer j = nVars - i;
+            v2.fastPutAsync(i, j);
+            v3.fastPutAsync(i, 0);
         }
 
 
