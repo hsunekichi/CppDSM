@@ -254,7 +254,7 @@ public:
     void insert_results_concurrently(std::vector<T> &data)
     {
         // Reserve space atomically
-        int new_val = i_size.increment(data.size());
+        int new_val = i_size.increment(data.size(), true);
         int init = new_val - data.size();
 
         // Write data concurrently
@@ -267,7 +267,7 @@ public:
     void insert_results_concurrently(std::vector<long long> &data)
     {
         // Reserve space atomically
-        int new_val = i_size.increment(data.size());
+        int new_val = i_size.increment(data.size(), true);
         int init = new_val - data.size();
 
         // Write data concurrently

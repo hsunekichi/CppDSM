@@ -28,17 +28,17 @@ int main(int argc, char *argv[])
 
     std::cout << pcache->ping() << std::endl;
 
-    //Distributed_vector<int> v1("v1", pcache);
-    //Distributed_vector<int> v2("v2", pcache);
-    //Distributed_vector<int> v3("v3", pcache);
+    Distributed_vector<int> v1("v1", pcache);
+    Distributed_vector<int> v2("v2", pcache);
+    Distributed_vector<int> v3("v3", pcache);
 
     //std::vector<int> v1;
     //std::vector<int> v2;
     //std::vector<int> v3;
 
-    Hash_vector<int> v1;
-    Hash_vector<int> v2;
-    Hash_vector<int> v3;
+    //Hash_vector<int> v1;
+    //Hash_vector<int> v2;
+    //Hash_vector<int> v3;
 
     
 
@@ -57,6 +57,8 @@ int main(int argc, char *argv[])
         v1.push_back(i);
         v2.push_back(vSize-i);
     }
+
+    //pcache->full_sync(true);
 
     auto mult = std::chrono::high_resolution_clock::now();
 

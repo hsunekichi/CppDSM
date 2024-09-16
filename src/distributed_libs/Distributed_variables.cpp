@@ -230,10 +230,10 @@ public:
                 Distributed_variable::to_string(value));
     }
 
-    // Incre    // Increments the atomic and returns the new value
-    int increment(int value = 1)
+    // Increments the atomic and returns the new value
+    int increment(int value = 1, bool atomic=false)
     {
-        int new_val = (int) pcache->hincrby(int_id, value_id, value);
+        int new_val = (int) pcache->hincrby(int_id, value_id, value, !atomic);
     
         return new_val;
     }

@@ -57,7 +57,7 @@ long long EXEC_TIME = 10;
 long long BATCH_SIZE = 10000;
 long long N_THREADS = 16;
 
-std::string HOST = "192.168.1.50";
+std::string HOST = "127.0.0.1";
 long long PORT = 6379;
 
 
@@ -104,23 +104,29 @@ void prime_worker (QUEUE &data, Distributed_vector<int> &d_primes, MUTEX &mtx_da
     }
 
     auto t2 = std::chrono::high_resolution_clock::now();
-    //std::cout << "Processed: " << local_counter << " in " << std::chrono::duration_cast<std::chrono::milliseconds>(t2 - t1).count() << " ms" << std::endl;
+    std::cout << "Processed: " << local_counter << " in " << std::chrono::duration_cast<std::chrono::milliseconds>(t2 - t1).count() << " ms" << std::endl;
 
     d_counter += local_counter;
 
+    std::cout << "Inserting results" << std::endl;
+
     //d_mtx_primes.lock();
     d_primes.insert_results_concurrently(local_primes);
+
+    std::cout << "Results inserted" << std::endl;
     //d_mtx_primes.unlock();
 }
+
+
+long long MAX = std::numeric_limits<int>::max();
+
+long long seed = 123456789;
+static std::mt19937 gen(seed);
 
 // Returns a number between 100000000 and MAX
 long long generate_number()
 {
-    long long MAX = std::numeric_limits<int>::max();
-    MAX = MAX;
-
-    long long seed = 123456789;
-    static std::mt19937 gen(seed);
+    
     static std::uniform_int_distribution<long long> dis(100000ll, MAX);
 
     return dis(gen);
@@ -165,7 +171,7 @@ int main(int argc, char *argv[])
 
     std::cout << "Rank: " << rank << " Size: " << size << std::endl;
 
-    //pcache->barrier_synchronization("init", size);
+    pcache->barrier_synchronization("init", size);
 
 
     // Get hardware concurrency
@@ -196,12 +202,14 @@ int main(int argc, char *argv[])
         }
 
         auto t1 = std::chrono::high_resolution_clock::now();
+
         mtx_data.lock();
         for (auto &number : batch)
         {
             data.push(number);
         }
         mtx_data.unlock();
+
         auto t2 = std::chrono::high_resolution_clock::now();
 
         if (data.size() > 10000)
@@ -223,9 +231,11 @@ int main(int argc, char *argv[])
         t.join();
     }
 
-    auto end = std::chrono::high_resolution_clock::now(); 
+    std::cout << "Joined" << std::endl;
+
     pcache->barrier_synchronization("end", size, false);
-    
+    auto end = std::chrono::high_resolution_clock::now(); 
+
 
     if (rank == 0)
     {    

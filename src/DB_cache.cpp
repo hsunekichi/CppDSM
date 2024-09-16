@@ -429,7 +429,7 @@ public:
 	}
 
 	// Increments an integer variable and returns the new value
-	long long hincrby(const std::string &name, const std::string &variable, int number)
+	long long hincrby(const std::string &name, const std::string &variable, int number, bool execute_buffered=true)
 	{
 		DB_operation operation;
 
@@ -438,7 +438,8 @@ public:
 		operation.param[1] = variable;
 		operation.param[2] = std::to_string(number);
 
-		return buffer.executeOperation(operation, true);	// Buffer mantains sequential consistency if necesary
+		memory_controller.incrementVariable(name, variable, number);	// Increments the variable if is cached
+		return buffer.executeOperation(operation, !execute_buffered);	// Buffer mantains sequential consistency if necesary
 	}
 
 	// Sends an event to all the nodes waiting for it

@@ -715,6 +715,22 @@ public:
         return isCached;
     }
 
+    void incrementVariable(const std::string &blockName, const std::string &variableName, int number)
+    {
+        if (USE_CACHE)
+        {
+            blocksMtx.lock();
+            if (blocks.find(blockName) != blocks.end())
+            {
+                int value = std::stoi(blocks[blockName][variableName]);
+                value += number;
+                blocks[blockName][variableName] = std::to_string(value);
+            }
+            blocksMtx.unlock();
+        }
+    }
+
+
     void writeVariable(const std::string& blockName, const std::string &varName, const std::string &value)
     {
         blocksMtx.lock();

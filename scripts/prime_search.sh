@@ -1,5 +1,10 @@
 #!/bin/bash
 
+if [ "$#" -ne 1 ]; then
+    echo "Usage: $0 <command>"
+    exit 1
+fi
+
 primeHosts="./prime_hosts"
 command=$1
 
