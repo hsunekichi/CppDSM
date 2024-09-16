@@ -57,23 +57,22 @@ long long EXEC_TIME = 10;
 long long BATCH_SIZE = 10000;
 long long N_THREADS = 16;
 
-std::string HOST = "127.0.0.1";
-long long PORT = 6379;
+std::string HOST = "192.168.1.49";
+long long PORT = 7000;
 
 
-void prime_worker (QUEUE &data, Distributed_vector<int> &d_primes, MUTEX &mtx_data, Distributed_mutex &d_mtx_primes, Distributed_atomic<int> &d_counter, std::atomic<bool> &finish)
+void prime_worker (QUEUE &data, Distributed_vector<int> &d_primes, MUTEX &mtx_data, Distributed_mutex &d_mtx_primes, Distributed_atomic<long long> &d_counter, std::atomic<bool> &finish)
 {
     std::vector <long long> local_primes;
 
-    int local_counter = 0;
+    long long local_counter = 0;
     auto t1 = std::chrono::high_resolution_clock::now();
+
+    std::vector <long long> local_data;
 
     while (!finish)
     {
         // Get batch of data
-        std::vector <long long> local_data(BATCH_SIZE);
-        
-
         mtx_data.lock();
         
         for (long long i = 0; i < BATCH_SIZE; i++)
@@ -81,7 +80,7 @@ void prime_worker (QUEUE &data, Distributed_vector<int> &d_primes, MUTEX &mtx_da
             if (data.empty())
                 break;
 
-            local_data[i] = data.front();
+            local_data.push_back(data.front());
             data.pop();
         }
 
@@ -101,34 +100,30 @@ void prime_worker (QUEUE &data, Distributed_vector<int> &d_primes, MUTEX &mtx_da
         }
 
         local_counter += local_data.size();
+        local_data.clear();
     }
 
     auto t2 = std::chrono::high_resolution_clock::now();
-    std::cout << "Processed: " << local_counter << " in " << std::chrono::duration_cast<std::chrono::milliseconds>(t2 - t1).count() << " ms" << std::endl;
 
     d_counter += local_counter;
 
-    std::cout << "Inserting results" << std::endl;
 
     //d_mtx_primes.lock();
     d_primes.insert_results_concurrently(local_primes);
-
-    std::cout << "Results inserted" << std::endl;
+    std::cout << "Primes inserted\n";
     //d_mtx_primes.unlock();
 }
 
 
-long long MAX = std::numeric_limits<int>::max();
+long long MAX = 100*((long long)std::numeric_limits<int>::max());
 
 long long seed = 123456789;
 static std::mt19937 gen(seed);
+static std::uniform_int_distribution<long long> dis(100000ll, MAX);
 
 // Returns a number between 100000000 and MAX
 long long generate_number()
 {
-    
-    static std::uniform_int_distribution<long long> dis(100000ll, MAX);
-
     return dis(gen);
 }
 
@@ -162,7 +157,7 @@ int main(int argc, char *argv[])
     auto pcache = std::make_shared<DB_cache>(HOST, PORT);
     Distributed_vector<int> d_primes("primes", pcache);
     Distributed_mutex d_mtx_primes("mtx_primes", pcache);
-    Distributed_atomic<int> d_counter("counter", pcache);
+    Distributed_atomic<long long> d_counter("counter", pcache);
 
     d_counter = 0;
     d_mtx_primes.lock();
@@ -177,7 +172,7 @@ int main(int argc, char *argv[])
     // Get hardware concurrency
 
 
-    long long n_threads = 2; //std::thread::hardware_concurrency();
+    long long n_threads = 8; //std::thread::hardware_concurrency();
     std::vector<std::thread> threads;
 
     std::cout << "Threads: " << n_threads << std::endl;
@@ -212,8 +207,8 @@ int main(int argc, char *argv[])
 
         auto t2 = std::chrono::high_resolution_clock::now();
 
-        if (data.size() > 10000)
-            std::this_thread::sleep_for(std::chrono::milliseconds(10));
+        if (data.size() > 100000)
+            std::this_thread::sleep_for(std::chrono::milliseconds(1));
 
         //std::cout << "Data size: " << data.size() << std::endl;
 
@@ -231,16 +226,14 @@ int main(int argc, char *argv[])
         t.join();
     }
 
-    std::cout << "Joined" << std::endl;
-
-    pcache->barrier_synchronization("end", size, false);
+    //pcache->barrier_synchronization("end", size, false);
+    long long processed_primes = d_counter;
     auto end = std::chrono::high_resolution_clock::now(); 
 
 
     if (rank == 0)
     {    
-        pcache->acquire_sync(true);
-        long long processed_primes = d_counter;
+        std::cout << "Arriving at end barrier" << std::endl;
 
         auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
 

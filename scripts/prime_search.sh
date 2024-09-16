@@ -1,12 +1,7 @@
 #!/bin/bash
 
-if [ "$#" -ne 1 ]; then
-    echo "Usage: $0 <command>"
-    exit 1
-fi
-
 primeHosts="./prime_hosts"
-command=$1
+command="prime"
 
 # Parse prime hosts, one ip per line. Discard lines starting with #
 primeHostsArray=()
@@ -22,6 +17,7 @@ for i in "${!primeHostsArray[@]}";
 do
     host=${primeHostsArray[$i]}
 
-    scp "bin/$command" "$host:~/"
+    rm ~/prime
+    cp "bin/$command" "$host:~/"
     ssh -o StrictHostKeyChecking=no $host "~/$command $i ${#primeHostsArray[@]}" &
 done

@@ -17,7 +17,6 @@ using MUTEX = std::mutex;
 using QUEUE = std::queue<long long>;
 
 
-
 bool is_prime(long long N)
 {
     //std::this_thread::sleep_for(std::chrono::microseconds(1));
@@ -58,18 +57,22 @@ long long EXEC_TIME = 10;
 long long BATCH_SIZE = 10000;
 long long N_THREADS = 16;
 
+std::string HOST = "127.0.0.1";
+long long PORT = 6379;
 
-void prime_worker (QUEUE &data, std::vector<long long> &primes, MUTEX &mtx_data, MUTEX &mtx_primes, COUNTER_TYPE &counter, std::atomic<bool> &finish)
+
+void prime_worker (QUEUE &data, std::vector<int> &d_primes, MUTEX &mtx_data, std::mutex &d_mtx_primes, std::atomic<long long> &d_counter, std::atomic<bool> &finish)
 {
     std::vector <long long> local_primes;
+
+    long long local_counter = 0;
     auto t1 = std::chrono::high_resolution_clock::now();
+
+    std::vector <long long> local_data;
 
     while (!finish)
     {
         // Get batch of data
-        std::vector <long long> local_data(BATCH_SIZE);
-        
-
         mtx_data.lock();
         
         for (long long i = 0; i < BATCH_SIZE; i++)
@@ -77,7 +80,7 @@ void prime_worker (QUEUE &data, std::vector<long long> &primes, MUTEX &mtx_data,
             if (data.empty())
                 break;
 
-            local_data[i] = data.front();
+            local_data.push_back(data.front());
             data.pop();
         }
 
@@ -96,28 +99,30 @@ void prime_worker (QUEUE &data, std::vector<long long> &primes, MUTEX &mtx_data,
             }
         }
 
-        counter += local_data.size();
+        local_counter += local_data.size();
+        local_data.clear();
     }
 
     auto t2 = std::chrono::high_resolution_clock::now();
-    //std::cout << "Processed: " << counter << " in " << std::chrono::duration_cast<std::chrono::milliseconds>(t2 - t1).count() << " ms" << std::endl;
-    
 
-    mtx_primes.lock();
-    primes.insert(primes.end(), local_primes.begin(), local_primes.end());
-    mtx_primes.unlock();
+    d_counter += local_counter;
+
+
+    d_mtx_primes.lock();
+    d_primes.insert(d_primes.end(), local_primes.begin(), local_primes.end());
+    d_mtx_primes.unlock();
 }
+
+
+long long MAX = 100*((long long)std::numeric_limits<int>::max());
+
+long long seed = 123456789;
+static std::mt19937 gen(seed);
+static std::uniform_int_distribution<long long> dis(100000ll, MAX);
 
 // Returns a number between 100000000 and MAX
 long long generate_number()
 {
-    long long MAX = std::numeric_limits<int>::max();
-    MAX = MAX;
-
-    long long seed = 123456789;
-    static std::mt19937 gen(seed);
-    static std::uniform_int_distribution<long long> dis(100000ll, MAX);
-
     return dis(gen);
 }
 
@@ -131,12 +136,24 @@ int main(int argc, char *argv[])
     MUTEX mtx_data;
     MUTEX mtx_primes;
 
+
     counter = 0;
     long long s_to_execute = EXEC_TIME;
 
-    primes.clear();
+    std::atomic<long long> d_counter;
+    std::vector<int> d_primes;
+    std::mutex d_mtx_primes;
 
-    long long n_threads = 2; // std::thread::hardware_concurrency();
+    d_counter = 0;
+    d_mtx_primes.lock();
+    d_primes.clear();
+    d_mtx_primes.unlock();
+
+
+    // Get hardware concurrency
+
+
+    long long n_threads = 2; //std::thread::hardware_concurrency();
     std::vector<std::thread> threads;
 
     std::cout << "Threads: " << n_threads << std::endl;
@@ -144,7 +161,7 @@ int main(int argc, char *argv[])
 
     for (long long i = 0; i < n_threads; i++)
     {
-        threads.push_back(std::thread(prime_worker, std::ref(data), std::ref(primes), std::ref(mtx_data), std::ref(mtx_primes), std::ref(counter), std::ref(finish)));
+        threads.push_back(std::thread(prime_worker, std::ref(data), std::ref(d_primes), std::ref(mtx_data), std::ref(d_mtx_primes), std::ref(d_counter), std::ref(finish)));
     }
 
     // Get time
@@ -161,16 +178,18 @@ int main(int argc, char *argv[])
         }
 
         auto t1 = std::chrono::high_resolution_clock::now();
+
         mtx_data.lock();
         for (auto &number : batch)
         {
             data.push(number);
         }
         mtx_data.unlock();
+
         auto t2 = std::chrono::high_resolution_clock::now();
 
-        if (data.size() > 1000000)
-            std::this_thread::sleep_for(std::chrono::milliseconds(10));
+        if (data.size() > 100000)
+            std::this_thread::sleep_for(std::chrono::milliseconds(1));
 
         //std::cout << "Data size: " << data.size() << std::endl;
 
@@ -188,18 +207,21 @@ int main(int argc, char *argv[])
         t.join();
     }
 
+    //pcache->barrier_synchronization("end", size, false);
+    long long processed_primes = d_counter;
+    auto end = std::chrono::high_resolution_clock::now(); 
 
-    long long processed_primes = counter;
-    auto end = std::chrono::high_resolution_clock::now();
 
-    auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
+    {    
+        std::cout << "Arriving at end barrier" << std::endl;
 
-    std::cout << counter << " numbers processed in " << double(duration.count() / 1000) << " seconds" << std::endl;
+        auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
 
-    
-    std::cout << "Processed per second: " << (double)processed_primes / double(duration.count() / 1000) << std::endl;
-    std::cout << "Primes found: " << primes.size() << std::endl;
+        std::cout << processed_primes << " numbers processed in " << double(duration.count() / 1000) << " seconds" << std::endl;
 
+        std::cout << "Processed per second: " << (double)processed_primes / double(duration.count() / 1000) << std::endl;
+        std::cout << "Primes found: " << d_primes.size() << std::endl;
+    }
 
     return 0;
 }

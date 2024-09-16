@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # IP address and starting port number
-IP_ADDRESS="192.168.1.50"
+IP_ADDRESS="192.168.1.49"
 START_PORT=7000
 
 # Check args

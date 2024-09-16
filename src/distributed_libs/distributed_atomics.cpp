@@ -268,3 +268,175 @@ public:
         return get() >= value;
     }
 };
+
+
+// Template for long long
+template <>
+class Distributed_atomic<long long>
+{
+    std::string atomic_id;
+    std::shared_ptr<DB_cache> pcache;
+
+public:
+
+    Distributed_atomic(std::string _atomic_id, std::shared_ptr<DB_cache> _pcache)
+    {
+        pcache = _pcache;
+        atomic_id = _atomic_id;
+
+        pcache->setnx(atomic_id, "0");       // Creates the mutex if it does not exist
+        pcache->full_sync();   // Warrantees consistency
+    }
+
+    operator long long()
+    {
+        return get();
+    }
+
+    // Returns the raw, unprotected value of the atomic
+    long long get()
+    {
+        pcache->acquire_sync(true);   // Warrantees consistency
+        auto val = pcache->get(atomic_id);
+
+        if (val)
+            return stoll(val.value());
+        else
+            throw std::out_of_range("Key not found");
+    }
+
+    // Sets the raw value of the atomic
+    bool set(long long value)
+    {
+        pcache->set(atomic_id, std::to_string(value));
+        pcache->release_sync();  // Warrantees consistency
+
+        return true;
+    }
+
+    bool operator=(long long value)
+    {
+        return set(value);
+    }
+
+    // Increments the atomic and returns the new value
+    long long increment(long long value = 1)
+    {
+        long long new_val = (long long) pcache->increment(atomic_id, value);
+    
+        return new_val;
+    }
+
+    // Operator ++
+    long long operator++()
+    {
+        return increment();
+    }
+
+    // Operator ++
+    long long operator++(int)
+    {
+        return increment()-1;
+    }
+
+    // Decrements the atomic
+    bool decrement(long long value = 1)
+    {
+        return increment(-value);
+    }
+
+    // Operator --
+    bool operator--()
+    {
+        return decrement();
+    }
+
+    // Operator --
+    bool operator--(int)
+    {
+        return decrement()+1;
+    }
+
+    // Adds a value to the atomic
+    bool add(long long value)
+    {
+        return increment(value);
+    }
+
+    // Operator +=
+    bool operator+=(long long value)
+    {
+        return add(value);
+    }
+
+    // Substracts a value to the atomic
+    bool substract(long long value)
+    {
+        return decrement(value);
+    }
+
+    // Operator -=
+    bool operator-=(long long value)
+    {
+        return substract(value);
+    }
+
+    // Arithmetic operators
+    long long operator+(long long value)
+    {
+        return get() + value;
+    }
+
+    long long operator-(long long value)
+    {
+        return get() - value;
+    }
+
+    long long operator/(long long value)
+    {
+        return get() / value;
+    }
+
+    // Multiplication
+    long long operator*(long long value)
+    {
+        return get() * value;
+    }
+
+    // Modulus
+    long long operator%(long long value)
+    {
+        return get() % value;
+    }
+
+    // Comparison operators
+    bool operator==(long long value)
+    {
+        return get() == value;
+    }
+
+    bool operator!=(long long value)
+    {
+        return get() != value;
+    }
+
+    bool operator<(long long value)
+    {
+        return get() < value;
+    }
+
+    bool operator>(long long value)
+    {
+        return get() > value;
+    }
+
+    bool operator<=(long long value)
+    {
+        return get() <= value;
+    }
+
+    bool operator>=(long long value)
+    {
+        return get() >= value;
+    }
+};

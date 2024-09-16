@@ -413,7 +413,9 @@ public:
 
 	OptionalString get(const std::string &blockName)
 	{
-		return memory_controller.get(blockName);	
+		release_sync();		// Up to this point, all memory operations are done
+		auto val = memory_controller.get(blockName);	
+		return val;
 	}
 
 	// Increments an integer variable and returns the new value
